@@ -4,7 +4,7 @@ import { cn } from '../../utils/cn';
 interface SpotlightCardProps {
   children: ReactNode;
   className?: string;
-  glowColor?: string; // hex or rgb
+  glowColor?: string;
 }
 
 export const SpotlightCard: React.FC<SpotlightCardProps> = ({
@@ -32,9 +32,15 @@ export const SpotlightCard: React.FC<SpotlightCardProps> = ({
       onMouseEnter={() => setOpacity(1)}
       onMouseLeave={() => setOpacity(0)}
       className={cn(
-        "relative rounded-3xl overflow-hidden border border-[#D97706]/20 bg-[#1A1615] transition-all duration-300",
+        "relative rounded-3xl overflow-hidden border transition-all duration-300",
         className
       )}
+      style={{
+        backgroundColor: 'var(--bg-card)',
+        borderColor: 'var(--border-subtle)',
+        boxShadow: 'var(--shadow-card)',
+        color: 'var(--text-primary)',
+      }}
     >
       {/* Dynamic Cursor Spotlight Beam */}
       <div
@@ -44,7 +50,7 @@ export const SpotlightCard: React.FC<SpotlightCardProps> = ({
           background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, ${glowColor}, transparent 45%)`
         }}
       />
-      
+
       <div className="relative z-20 h-full flex flex-col justify-between">
         {children}
       </div>
