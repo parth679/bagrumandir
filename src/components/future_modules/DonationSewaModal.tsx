@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TEMPLE_INFO } from '../data/templeData';
+import { TEMPLE_INFO } from '../../data/templeData';
 import { X, HeartHandshake, CheckCircle2, Download, ShieldCheck, Sparkles, Building2 } from 'lucide-react';
 
 interface DonationSewaModalProps {

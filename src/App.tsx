@@ -1,25 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { Header } from './components/Header';
-import { Hero } from './components/Hero';
-import { QuickAccessBar } from './components/QuickAccessBar';
-import { DailyDarshanGallery } from './components/DailyDarshanGallery';
-import { YatriNivasBooking } from './components/YatriNivasBooking';
-import { SpiritualExperiences } from './components/SpiritualExperiences';
-import { TimingsPanchang } from './components/TimingsPanchang';
-import { LocationVisitorGuide } from './components/LocationVisitorGuide';
-import { AudioChanterBar } from './components/AudioChanterBar';
-import { DonationSewaModal } from './components/DonationSewaModal';
-import { Footer } from './components/Footer';
-import { Language, ThemeMode, YatriRoom } from './types';
+import { NavigationPill } from './components/layout/NavigationPill';
+import { MobileDock } from './components/layout/MobileDock';
+import { HeroSection } from './components/mandir/HeroSection';
+import { SanctumDarshan } from './components/mandir/SanctumDarshan';
+import { ArchitecturalParallax } from './components/mandir/ArchitecturalParallax';
+import { RoomGrid } from './components/yatrinivas/RoomGrid';
+import { FacilitiesOverview } from './components/yatrinivas/FacilitiesOverview';
+import { AartiSchedule } from './components/mandir/AartiSchedule';
+import { VisitorGuide } from './components/visitor/VisitorGuide';
+import { Footer } from './components/layout/Footer';
+import { AudioChanterBar } from './components/visitor/AudioChanterBar';
+import { Language, ThemeMode } from './types';
 
 export default function App() {
   const [themeMode, setThemeMode] = useState<ThemeMode>('stone');
   const [language, setLanguage] = useState<Language>('EN');
+  const [activeSection, setActiveSection] = useState<string>('hero');
   const [audioPlaying, setAudioPlaying] = useState<boolean>(false);
-  const [isBookingModalOpen, setIsBookingModalOpen] = useState<boolean>(false);
-  const [selectedRoomForBooking, setSelectedRoomForBooking] = useState<YatriRoom | null>(null);
-  const [isSewaModalOpen, setIsSewaModalOpen] = useState<boolean>(false);
 
+  // Sync dark class on root html element
   useEffect(() => {
     if (themeMode === 'meditation') {
       document.documentElement.classList.add('dark');
@@ -29,11 +28,12 @@ export default function App() {
   }, [themeMode]);
 
   const handleToggleTheme = () => {
-    setThemeMode(prev => (prev === 'stone' ? 'meditation' : 'stone'));
+    setThemeMode((prev) => (prev === 'stone' ? 'meditation' : 'stone'));
   };
 
   const scrollToSection = (sectionId: string) => {
-    if (sectionId === 'top') {
+    setActiveSection(sectionId);
+    if (sectionId === 'top' || sectionId === 'hero') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
@@ -43,92 +43,85 @@ export default function App() {
     }
   };
 
+  // IntersectionObserver to dynamically highlight active section
+  useEffect(() => {
+    const sections = ['hero', 'darshan', 'architecture', 'yatrinivas', 'timings', 'visitor'];
+    const handleScroll = () => {
+      const scrollPos = window.scrollY + 200;
+      for (const sectionId of sections) {
+        const elem = document.getElementById(sectionId);
+        if (elem) {
+          const top = elem.offsetTop;
+          const height = elem.offsetHeight;
+          if (scrollPos >= top && scrollPos < top + height) {
+            setActiveSection(sectionId);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${
-      themeMode === 'meditation'
-        ? 'bg-[#002D33] text-[#FDFBF7]'
-        : 'bg-[#FDFBF7] text-[#1A1A1A]'
-    }`}>
-      {/* Header */}
-      <Header
+    <div
+      className={`min-h-screen transition-colors duration-300 ${
+        themeMode === 'meditation'
+          ? 'bg-[#0E0D0C] text-[#FDFBF7]'
+          : 'bg-[#12100E] text-[#FDFBF7]'
+      }`}
+    >
+      {/* 3D Adaptive Frosted Navigation Pill Header */}
+      <NavigationPill
         theme={themeMode}
         onToggleTheme={handleToggleTheme}
         language={language}
         onSelectLanguage={setLanguage}
-        onOpenBooking={() => {
-          setSelectedRoomForBooking(null);
-          setIsBookingModalOpen(true);
-        }}
-        onOpenSewa={() => setIsSewaModalOpen(true)}
-        onNavigateSection={scrollToSection}
-      />
-
-      {/* Hero Section */}
-      <Hero
-        onOpenBooking={() => {
-          setSelectedRoomForBooking(null);
-          setIsBookingModalOpen(true);
-        }}
+        activeSection={activeSection}
         onNavigateSection={scrollToSection}
         audioPlaying={audioPlaying}
         onToggleAudio={() => setAudioPlaying(!audioPlaying)}
       />
 
-      {/* Quick Access Bar */}
-      <QuickAccessBar
-        onOpenBooking={() => {
-          setSelectedRoomForBooking(null);
-          setIsBookingModalOpen(true);
-        }}
-        onNavigateSection={scrollToSection}
-      />
+      {/* Main Content Sections */}
+      <main className="relative z-10">
+        {/* 1. Cinematic Hero Section with Live IST Status Strip */}
+        <HeroSection onNavigateSection={scrollToSection} />
 
-      {/* Main Content Modules */}
-      <main className="space-y-4">
-        {/* Daily Darshan, History, Video & Scripture Hub */}
-        <DailyDarshanGallery />
+        {/* 2. Sanctum Darshan & Sacred Annakut Offering */}
+        <SanctumDarshan />
 
-        {/* Yatri Nivas Accommodations & Room Booking */}
-        <YatriNivasBooking
-          isBookingModalOpen={isBookingModalOpen}
-          onCloseBookingModal={() => setIsBookingModalOpen(false)}
-          selectedRoomForBooking={selectedRoomForBooking}
-          onSelectRoomForBooking={(room) => {
-            setSelectedRoomForBooking(room);
-            if (room) setIsBookingModalOpen(true);
-          }}
-        />
+        {/* 3. 2.5D Carved Sandstone Veranda Parallax Architecture */}
+        <ArchitecturalParallax />
 
-        {/* Things To Do & Spiritual Experiences */}
-        <SpiritualExperiences />
+        {/* 4. Yatri Nivas Accommodations (Anand Nilayam Usability & Real Photography) */}
+        <RoomGrid />
 
-        {/* Aarti Timings Schedule & Panchang Calendar */}
-        <TimingsPanchang />
+        {/* 5. Yatri Nivas Facilities, Atrium & Guidelines */}
+        <FacilitiesOverview />
 
-        {/* Interactive Location Map & Visitor Etiquette Guide */}
-        <LocationVisitorGuide />
+        {/* 6. Daily Aarti Timetable & IST Real-Time Schedule */}
+        <AartiSchedule />
+
+        {/* 7. Visitor Directions, Map, & Guidelines */}
+        <VisitorGuide />
       </main>
 
-      {/* Footer */}
-      <Footer
-        onOpenBooking={() => {
-          setSelectedRoomForBooking(null);
-          setIsBookingModalOpen(true);
-        }}
-        onOpenSewa={() => setIsSewaModalOpen(true)}
-        onNavigateSection={scrollToSection}
-      />
+      {/* Heritage Footer */}
+      <Footer onNavigateSection={scrollToSection} />
 
-      {/* Ambient Audio Chanter Player */}
+      {/* Persistent Ambient Devotional Audio Player */}
       <AudioChanterBar
         isPlaying={audioPlaying}
         onTogglePlay={() => setAudioPlaying(!audioPlaying)}
       />
 
-      {/* Sewa / Offering Modal */}
-      <DonationSewaModal
-        isOpen={isSewaModalOpen}
-        onClose={() => setIsSewaModalOpen(false)}
+      {/* Floating Bottom Quick Dock (Mobile Devices) */}
+      <MobileDock
+        activeSection={activeSection}
+        onNavigateSection={scrollToSection}
       />
     </div>
   );

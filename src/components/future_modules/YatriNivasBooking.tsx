@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { YATRI_ROOMS, TEMPLE_INFO } from '../data/templeData';
-import { YatriRoom, BookingDetails } from '../types';
+import { YATRI_ROOMS, TEMPLE_INFO } from '../../data/templeData';
+import { YatriRoom, BookingDetails } from '../../types';
 import { 
   BedDouble, 
   Check, 
