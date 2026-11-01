@@ -4,22 +4,25 @@
  * independent of the visitor's local system timezone.
  */
 
+import { Language } from '../types';
+
 export interface AartiItem {
   id: string;
   name: string;
   devanagariName: string;
   gujaratiName: string;
-  timeString: string; // "05:30 AM"
-  hour: number;       // 24-hr format
-  minute: number;
+  timeString: string | null; // e.g. "06:00 AM" or null for unconfirmed
+  hour: number | null;       // 24-hr format (0-23) or null
+  minute: number | null;     // (0-59) or null
+  confirmed: boolean;
   meaning: string;
   description: string;
 }
 
 export interface TempleTimeStatus {
-  formattedISTTime: string;      // e.g. "06:45 PM"
-  formattedISTDate: string;      // e.g. "01 Nov 2026"
-  dayOfWeek: string;             // e.g. "Sunday"
+  formattedISTTime: string;      // e.g. "06:30 PM IST"
+  formattedISTDate: string;      // e.g. "02 Nov 2026"
+  dayOfWeek: string;             // e.g. "Monday"
   isOpen: boolean;
   statusLabel: string;           // "Open for Darshan", "Afternoon Repose", etc.
   statusSubtext: string;
@@ -33,15 +36,25 @@ export interface TempleTimeStatus {
   };
 }
 
+/**
+ * Five Daily Aartis of Shree Swaminarayan Mandir, Jaipur (Bagru)
+ * Verified Timings:
+ * - Mangla Aarti: 06:00 AM (Confirmed)
+ * - Shangar Aarti: Timing to be confirmed (TBC)
+ * - Rajbhog Aarti: Timing to be confirmed (TBC)
+ * - Sandhya Aarti: 06:30 PM (Confirmed)
+ * - Shayan Aarti: Timing to be confirmed (TBC)
+ */
 export const OFFICIAL_AARTI_SCHEDULE: AartiItem[] = [
   {
     id: 'mangla',
     name: 'Mangla Aarti',
-    devanagariName: 'मंगळा आरती',
+    devanagariName: 'मंगला आरती',
     gujaratiName: 'મંગળા આરતી',
-    timeString: '05:30 AM',
-    hour: 5,
-    minute: 30,
+    timeString: '06:00 AM',
+    hour: 6,
+    minute: 0,
+    confirmed: true,
     meaning: 'Awakening prayer welcoming the first morning divine light.',
     description: 'Devotees gather in silent meditation as sanctum doors open with burning camphor lamps.'
   },
@@ -50,9 +63,10 @@ export const OFFICIAL_AARTI_SCHEDULE: AartiItem[] = [
     name: 'Shangar Aarti',
     devanagariName: 'शृंगार आरती',
     gujaratiName: 'શણગાર આરતી',
-    timeString: '08:05 AM',
-    hour: 8,
-    minute: 5,
+    timeString: null,
+    hour: null,
+    minute: null,
+    confirmed: false,
     meaning: 'Adornment prayer unveiling sacred silk garments and flower garlands.',
     description: 'The deities are presented in hand-woven vastras and fresh fragrant garlands accompanied by kirtans.'
   },
@@ -61,9 +75,10 @@ export const OFFICIAL_AARTI_SCHEDULE: AartiItem[] = [
     name: 'Rajbhog Aarti',
     devanagariName: 'राजभोग आरती',
     gujaratiName: 'રાજભોગ આરતી',
-    timeString: '10:30 AM',
-    hour: 10,
-    minute: 30,
+    timeString: null,
+    hour: null,
+    minute: null,
+    confirmed: false,
     meaning: 'Midday royal offering of pure sattvic delicacies.',
     description: 'Bhog is offered to Bhagwan Swaminarayan prior to midday temple repose.'
   },
@@ -72,20 +87,22 @@ export const OFFICIAL_AARTI_SCHEDULE: AartiItem[] = [
     name: 'Sandhya Aarti',
     devanagariName: 'संध्या आरती',
     gujaratiName: 'સંધ્યા આરતી',
-    timeString: '06:45 PM',
+    timeString: '06:30 PM',
     hour: 18,
-    minute: 45,
+    minute: 30,
+    confirmed: true,
     meaning: 'Sunset prayer with tiered glowing brass lamps and chiming bells.',
-    description: 'As twilight falls over Bagru Dham, the assembly fills with melodic collective chanting.'
+    description: 'As twilight falls over Jaipur (Bagru), the assembly fills with melodic collective chanting.'
   },
   {
     id: 'shayan',
     name: 'Shayan Aarti',
     devanagariName: 'शयन आरती',
     gujaratiName: 'શયન આરતી',
-    timeString: '08:30 PM',
-    hour: 20,
-    minute: 30,
+    timeString: null,
+    hour: null,
+    minute: null,
+    confirmed: false,
     meaning: 'Final night prayer prior to sanctum repose.',
     description: 'Gentle night prayer concluding daily darshan with devotional lullabies.'
   }
@@ -95,9 +112,9 @@ export const OFFICIAL_AARTI_SCHEDULE: AartiItem[] = [
 // Morning: 05:00 AM (300m) to 12:00 PM (720m)
 // Afternoon Repose: 12:00 PM (720m) to 03:00 PM (900m)
 // Evening: 03:00 PM (900m) to 08:30 PM (1230m)
-const MORNING_OPEN = 5 * 60;       // 300
-const MORNING_CLOSE = 12 * 60;     // 720
-const EVENING_OPEN = 15 * 60;      // 900
+const MORNING_OPEN = 5 * 60;        // 300
+const MORNING_CLOSE = 12 * 60;      // 720
+const EVENING_OPEN = 15 * 60;       // 900
 const EVENING_CLOSE = 20 * 60 + 30; // 1230
 
 /**
@@ -105,7 +122,8 @@ const EVENING_CLOSE = 20 * 60 + 30; // 1230
  */
 export function getTempleTimeStatus(
   statusOverride?: 'auto' | 'open' | 'closed' | 'festival_special',
-  specialNotice?: string
+  specialNotice?: string,
+  lang: Language = 'EN'
 ): TempleTimeStatus {
   const now = new Date();
 
@@ -147,50 +165,86 @@ export function getTempleTimeStatus(
 
   const currentMinutes = hour * 60 + minute;
 
-  // Determine Open/Closed status
+  // Determine Open/Closed status with multilingual support
   let isOpen = false;
   let statusLabel = 'Closed for Repose';
   let statusSubtext = 'Mandir reopens at 03:00 PM IST';
 
   if (currentMinutes >= MORNING_OPEN && currentMinutes < MORNING_CLOSE) {
     isOpen = true;
-    statusLabel = 'Open for Darshan';
-    statusSubtext = 'Morning session until 12:00 PM IST';
+    if (lang === 'HI') {
+      statusLabel = 'दर्शन के लिए खुला';
+      statusSubtext = 'प्रातः सत्र दोपहर १२:०० PM IST तक';
+    } else if (lang === 'GU') {
+      statusLabel = 'દર્શન માટે ખુલ્લું';
+      statusSubtext = 'સવારનું સત્ર બપોરે ૧૨:૦૦ PM IST સુધી';
+    } else {
+      statusLabel = 'Open for Darshan';
+      statusSubtext = 'Morning session until 12:00 PM IST';
+    }
   } else if (currentMinutes >= MORNING_CLOSE && currentMinutes < EVENING_OPEN) {
     isOpen = false;
-    statusLabel = 'Afternoon Repose';
-    statusSubtext = 'Mandir reopens at 03:00 PM IST';
+    if (lang === 'HI') {
+      statusLabel = 'दोपहर विश्राम';
+      statusSubtext = 'मंदिर ०३:०० PM IST पर पुनः खुलेगा';
+    } else if (lang === 'GU') {
+      statusLabel = 'બપોરનો આરામ';
+      statusSubtext = 'મંદિર ૦૩:૦૦ PM IST એ ફરી ખૂલશે';
+    } else {
+      statusLabel = 'Afternoon Repose';
+      statusSubtext = 'Mandir reopens at 03:00 PM IST';
+    }
   } else if (currentMinutes >= EVENING_OPEN && currentMinutes <= EVENING_CLOSE) {
     isOpen = true;
-    statusLabel = 'Open for Darshan';
-    statusSubtext = 'Evening session until 08:30 PM IST';
+    if (lang === 'HI') {
+      statusLabel = 'दर्शन के लिए खुला';
+      statusSubtext = 'सायं सत्र रात्रि ०૮:३० PM IST तक';
+    } else if (lang === 'GU') {
+      statusLabel = 'દર્શન માટે ખુલ્લું';
+      statusSubtext = 'સાંજનું સત્ર રાત્રે ૦૮:૩૦ PM IST સુધી';
+    } else {
+      statusLabel = 'Open for Darshan';
+      statusSubtext = 'Evening session until 08:30 PM IST';
+    }
   } else {
     isOpen = false;
-    statusLabel = 'Closed for the Night';
-    statusSubtext = 'Mangla Aarti tomorrow at 05:30 AM IST';
+    if (lang === 'HI') {
+      statusLabel = 'रात्रि में बंद';
+      statusSubtext = 'कल मंगला आरती ०६:०० AM IST';
+    } else if (lang === 'GU') {
+      statusLabel = 'રાત્રે બંધ';
+      statusSubtext = 'આવતીકાલે મંગળા આરતી ૦૬:૦૦ AM IST';
+    } else {
+      statusLabel = 'Closed for the Night';
+      statusSubtext = 'Mangla Aarti tomorrow at 06:00 AM IST';
+    }
   }
 
   // Administrative overrides
   if (statusOverride === 'open') {
     isOpen = true;
-    statusLabel = 'Open for Special Darshan';
-    statusSubtext = specialNotice || 'Continuous festival darshan';
+    statusLabel = lang === 'HI' ? 'विशेष दर्शन खुला' : lang === 'GU' ? 'વિશેષ દર્શન ખુલ્લું' : 'Open for Special Darshan';
+    statusSubtext = specialNotice || (lang === 'HI' ? 'निरंतर उत्सव दर्शन' : lang === 'GU' ? 'નિરંતર ઉત્સવ દર્શન' : 'Continuous festival darshan');
   } else if (statusOverride === 'closed') {
     isOpen = false;
-    statusLabel = 'Mandir Temporarily Closed';
-    statusSubtext = specialNotice || 'Special ritual in progress';
+    statusLabel = lang === 'HI' ? 'मंदिर अस्थायी रूप से बंद' : lang === 'GU' ? 'મંદિર અસ્થાયી રીતે બંધ' : 'Mandir Temporarily Closed';
+    statusSubtext = specialNotice || (lang === 'HI' ? 'विशेष अनुष्ठान प्रगति पर' : lang === 'GU' ? 'વિશેષ પૂજા પ્રગતિમાં' : 'Special ritual in progress');
   } else if (statusOverride === 'festival_special') {
     isOpen = true;
-    statusLabel = 'Utsav Darshan Open';
-    statusSubtext = specialNotice || 'Special festival celebration';
+    statusLabel = lang === 'HI' ? 'उत्सव दर्शन खुला' : lang === 'GU' ? 'ઉત્સવ દર્શન ખુલ્લું' : 'Utsav Darshan Open';
+    statusSubtext = specialNotice || (lang === 'HI' ? 'विशेष उत्सव समारोह' : lang === 'GU' ? 'વિશેષ ઉત્સવ સમારોહ' : 'Special festival celebration');
   }
 
-  // Calculate Next Upcoming Aarti
+  // Calculate Next Upcoming Confirmed Aarti ONLY
+  // Unconfirmed Aartis (hour === null) are skipped in countdown calculation
   let nextAartiObj: AartiItem | null = null;
   let isTomorrow = false;
   let minutesRemaining = 0;
 
   for (const aarti of OFFICIAL_AARTI_SCHEDULE) {
+    if (!aarti.confirmed || aarti.hour === null || aarti.minute === null) {
+      continue;
+    }
     const aartiMinutes = aarti.hour * 60 + aarti.minute;
     if (aartiMinutes > currentMinutes) {
       nextAartiObj = aarti;
@@ -199,12 +253,12 @@ export function getTempleTimeStatus(
     }
   }
 
-  // If passed all aartis today, next is tomorrow's Mangla Aarti (05:30 AM)
+  // If passed all confirmed aartis today, next is tomorrow's Mangla Aarti (06:00 AM)
   if (!nextAartiObj) {
-    nextAartiObj = OFFICIAL_AARTI_SCHEDULE[0]; // Mangla
+    nextAartiObj = OFFICIAL_AARTI_SCHEDULE[0]; // Mangla (confirmed at 06:00 AM)
     isTomorrow = true;
     const minutesUntilMidnight = 24 * 60 - currentMinutes;
-    const minutesFromMidnightToMangla = nextAartiObj.hour * 60 + nextAartiObj.minute;
+    const minutesFromMidnightToMangla = (nextAartiObj.hour ?? 6) * 60 + (nextAartiObj.minute ?? 0);
     minutesRemaining = minutesUntilMidnight + minutesFromMidnightToMangla;
   }
 
@@ -212,11 +266,15 @@ export function getTempleTimeStatus(
   const remainingMinsOnly = minutesRemaining % 60;
 
   let countdownLabel = '';
-  if (hoursRemaining > 0) {
-    countdownLabel = `in ${hoursRemaining}h ${remainingMinsOnly}m`;
+  if (lang === 'HI') {
+    countdownLabel = hoursRemaining > 0 ? `${hoursRemaining} घंटे ${remainingMinsOnly} मिनट में` : `${remainingMinsOnly} मिनट में`;
+  } else if (lang === 'GU') {
+    countdownLabel = hoursRemaining > 0 ? `${hoursRemaining} કલાક ${remainingMinsOnly} મિનિટમાં` : `${remainingMinsOnly} મિનિટમાં`;
   } else {
-    countdownLabel = `in ${remainingMinsOnly}m`;
+    countdownLabel = hoursRemaining > 0 ? `in ${hoursRemaining}h ${remainingMinsOnly}m` : `in ${remainingMinsOnly}m`;
   }
+
+  const aartiName = lang === 'HI' ? nextAartiObj.devanagariName : lang === 'GU' ? nextAartiObj.gujaratiName : nextAartiObj.name;
 
   return {
     formattedISTTime,
@@ -226,8 +284,8 @@ export function getTempleTimeStatus(
     statusLabel,
     statusSubtext,
     nextAarti: {
-      name: nextAartiObj.name,
-      timeString: nextAartiObj.timeString,
+      name: aartiName,
+      timeString: nextAartiObj.timeString ?? '06:00 AM',
       isTomorrow,
       hoursRemaining,
       minutesRemaining: remainingMinsOnly,

@@ -1,14 +1,17 @@
 /**
  * Site Identity and Operational Contact Configuration
- * Shree Swaminarayan Mandir & Vishranti Gruh, Bagru Dham
+ * Shree Swaminarayan Mandir & Vishranti Gruh, Jaipur (Bagru)
  */
 
 export const SITE_CONFIG = {
   name: "Shree Swaminarayan Mandir",
   subName: "एवं विश्रांति गृह (यात्री निवास)",
   complexName: "Shree Swaminarayan Mandir & Vishranti Gruh",
-  branchName: "Bagru Dham Complex",
-  locationName: "Bagru, Jaipur, Rajasthan",
+  branchName: "Jaipur (Bagru) Complex",
+  locationName: "Jaipur (Bagru), Rajasthan",
+  shortLocation: "Jaipur (Bagru)",
+  devanagariLocation: "जयपुर (बगरू)",
+  gujaratiLocation: "જયપુર (બગરૂ)",
   affiliationDevanagari: "श्री नर नारायण देव पीठस्थान अन्तर्गत",
   affiliationEnglish: "Under Shree Narnarayandev Peethasthan (Ahmedabad Gadi)",
   

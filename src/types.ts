@@ -1,4 +1,4 @@
-export type ThemeMode = 'stone' | 'meditation';
+export type ThemeMode = 'dark' | 'light';
 export type Language = 'EN' | 'GU' | 'HI';
 
 export interface AartiTiming {
