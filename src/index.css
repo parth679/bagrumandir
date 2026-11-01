@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .font-display {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+  .font-heading {
+    font-family: 'Cinzel', serif;
+  }
+  .font-sans {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  }
+
+  /* Natural Tones Color Utility Gradients & Shines */
+  .natural-teal-bg {
+    background-color: #006D77;
+  }
+
+  .natural-teal-hover:hover {
+    background-color: #005a63;
+  }
+
+  .natural-saffron-bg {
+    background-color: #FF9933;
+  }
+
+  .saffron-gradient-bg {
+    background: linear-gradient(135deg, #FF9933 0%, #E65100 50%, #D97706 100%);
+  }
+
+  .teal-gradient-bg {
+    background: linear-gradient(135deg, #00383D 0%, #006D77 50%, #0D5C63 100%);
+  }
+
+  .natural-card-border {
+    border-color: rgba(0, 109, 119, 0.12);
+  }
+
+  .natural-saffron-border {
+    border-color: rgba(255, 153, 51, 0.25);
+  }
+
+  .gold-gradient-text {
+    background: linear-gradient(135deg, #FF9933 0%, #D97706 50%, #B08A43 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .gold-gradient-bg {
+    background: linear-gradient(135deg, #FF9933 0%, #E6C887 50%, #B08A43 100%);
+  }
+
+  /* Custom scrollbar matching Natural Tones warm sand & ocean teal */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #FDFBF7;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #006D77;
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #005a63;
+  }
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(1.02); }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+.animate-float {
+  animation: float-gentle 5s ease-in-out infinite;
+}
+

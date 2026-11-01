@@ -1,0 +1,6 @@
+{
+  "name": "Shree Swaminarayan Mandir & Yatri Nivas",
+  "description": "Official web app for Shree Swaminarayan Mandir and Yatri Nivas branch, featuring daily darshan, accommodation booking, aarti schedules, spiritual experiences, and events.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
