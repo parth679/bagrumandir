@@ -107,7 +107,8 @@ export const AboutPage: React.FC = () => {
           <div className="mt-10 pt-6 border-t border-[var(--border-subtle)] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[var(--text-muted)]">
             <div className="flex items-center gap-2">
               <ShieldCheck className="w-4 h-4 text-[#D97706]" />
-              <span>{SITE_CONFIG.affiliationDevanagari} ({SITE_CONFIG.affiliationEnglish})</span>
+              <span className="font-devanagari tracking-normal">{SITE_CONFIG.affiliationDevanagari}</span>
+              <span>({SITE_CONFIG.affiliationEnglish})</span>
             </div>
             <span className="font-semibold text-[#D97706]">Jaipur (Bagru), Rajasthan</span>
           </div>
@@ -116,3 +117,4 @@ export const AboutPage: React.FC = () => {
     </PageTransition>
   );
 };
+

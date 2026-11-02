@@ -82,7 +82,7 @@ export const SanctumDarshan: React.FC = () => {
             </div>
 
             <div className="text-xs text-[var(--text-subtle)] pt-2 border-t border-[var(--border-subtle)] flex items-center justify-between">
-              <span>{SITE_CONFIG.affiliationDevanagari}</span>
+              <span className="font-devanagari tracking-normal">{SITE_CONFIG.affiliationDevanagari}</span>
               <span className="text-[#D97706] font-semibold">Jaipur (Bagru)</span>
             </div>
           </div>

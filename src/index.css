@@ -54,6 +54,13 @@ body {
   }
   .font-devanagari {
     font-family: 'Noto Serif Devanagari', serif;
+    letter-spacing: normal !important;
+    word-spacing: normal;
+  }
+  .font-gujarati {
+    font-family: 'Noto Serif Gujarati', 'Noto Sans Gujarati', serif;
+    letter-spacing: normal !important;
+    word-spacing: normal;
   }
 
   /* Custom scrollbar matching Refined Divya Shila warm sandstone */

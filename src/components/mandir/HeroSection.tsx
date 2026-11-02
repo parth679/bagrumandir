@@ -68,10 +68,10 @@ export const HeroSection: React.FC<HeroSectionProps> = () => {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/50 backdrop-blur-md border border-[#D97706]/35 text-[#E2A752] text-xs uppercase tracking-[0.22em] font-medium mb-6 shadow-lg shadow-black/40"
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/50 backdrop-blur-md border border-[#D97706]/35 text-[#E2A752] text-xs font-medium mb-6 shadow-lg shadow-black/40"
         >
           <span className="w-2 h-2 rounded-full bg-[#E2A752] animate-pulse" />
-          <span className="font-['Noto_Serif_Devanagari',serif]">
+          <span className="font-['Noto_Serif_Devanagari',serif] tracking-normal normal-case text-xs sm:text-sm font-medium">
             {SITE_CONFIG.affiliationDevanagari}
           </span>
         </motion.div>

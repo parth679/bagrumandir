@@ -52,7 +52,11 @@ export const Footer: React.FC = () => {
             </div>
 
             <p className="text-xs text-[var(--text-muted)] leading-relaxed">
-              {t.footer.description} {SITE_CONFIG.affiliationDevanagari}.
+              {t.footer.description}{' '}
+              <span className="font-devanagari tracking-normal font-medium text-[var(--text-primary)]">
+                {SITE_CONFIG.affiliationDevanagari}
+              </span>
+              .
             </p>
 
             <div className="pt-2 text-[11px] text-[#D97706] font-medium">
