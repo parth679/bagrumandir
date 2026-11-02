@@ -310,11 +310,11 @@ export const UPCOMING_EVENTS: TempleEvent[] = [
 
 export const AUDIO_TRACKS: AudioTrack[] = [
   {
-    id: "a1",
-    title: "Swaminarayan Swaminarayan Akhand Dhun",
-    artist: "Mandir Bhajan Mandal",
-    duration: "15:20",
-    audioUrl: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=meditation-spiritual-113271.mp3",
+    id: "swaminarayan-akhand-dhun-bagru",
+    title: "Shree Swaminarayan Dhun",
+    artist: "Shree Swaminarayan Mandir, Jaipur (Bagru)",
+    duration: "21:50",
+    audioUrl: "/assets/audio/shree-swaminarayan-dhun.mp3",
     category: "dhun"
   },
   {
