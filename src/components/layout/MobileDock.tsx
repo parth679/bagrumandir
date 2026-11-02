@@ -5,7 +5,7 @@ import { useApp } from '../../context/AppContext';
 import { useT } from '../../i18n/useTranslation';
 import { cn } from '../../utils/cn';
 
-export const MobileDock: React.FC = () => {
+export const MobileDock: React.FC = React.memo(() => {
   const location = useLocation();
   const navigate = useNavigate();
   const { audioPlaying, toggleAudio, showAudioPanel, setShowAudioPanel } = useApp();
@@ -101,4 +101,6 @@ export const MobileDock: React.FC = () => {
       </nav>
     </div>
   );
-};
+});
+
+MobileDock.displayName = 'MobileDock';

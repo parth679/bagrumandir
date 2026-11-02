@@ -7,7 +7,7 @@ import { MapPin, Phone, Mail, ArrowUp } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { useT } from '../../i18n/useTranslation';
 
-export const Footer: React.FC = () => {
+export const Footer: React.FC = React.memo(() => {
   const navigate = useNavigate();
   const { language } = useApp();
   const t = useT();
@@ -173,4 +173,6 @@ export const Footer: React.FC = () => {
       </div>
     </footer>
   );
-};
+});
+
+Footer.displayName = 'Footer';

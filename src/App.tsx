@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'motion/react';
 import { AppProvider, useApp } from './context/AppContext';
 import { ConstellationBackground } from './components/common/ConstellationBackground';
 import { NavigationPill } from './components/layout/NavigationPill';
@@ -25,6 +26,7 @@ function ScrollToTop() {
 
 function MainLayout() {
   const { theme } = useApp();
+  const location = useLocation();
 
   return (
     <div
@@ -40,16 +42,18 @@ function MainLayout() {
       {/* 3D Adaptive Frosted Navigation Pill Header */}
       <NavigationPill />
 
-      {/* Multi-Page Route Content */}
+      {/* Multi-Page Route Content with Smooth Transitions */}
       <main className="relative z-10">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/darshan" element={<DarshanPage />} />
-          <Route path="/yatri-nivas" element={<YatriNivasPage />} />
-          <Route path="/visit" element={<VisitPage />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/darshan" element={<DarshanPage />} />
+            <Route path="/yatri-nivas" element={<YatriNivasPage />} />
+            <Route path="/visit" element={<VisitPage />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </AnimatePresence>
       </main>
 
       {/* Heritage Footer */}

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo, ReactNode } from 'react';
 import { Language, ThemeMode } from '../types';
 
 export interface AppContextType {
@@ -88,22 +88,26 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     });
   };
 
+  const contextValue = useMemo(
+    () => ({
+      language,
+      setLanguage,
+      theme,
+      setTheme,
+      toggleTheme,
+      audioPlaying,
+      setAudioPlaying,
+      toggleAudio,
+      showAudioPanel,
+      setShowAudioPanel,
+    }),
+    [language, theme, audioPlaying, showAudioPanel]
+  );
+
   return (
-    <AppContext.Provider
-      value={{
-        language,
-        setLanguage,
-        theme,
-        setTheme,
-        toggleTheme,
-        audioPlaying,
-        setAudioPlaying,
-        toggleAudio,
-        showAudioPanel,
-        setShowAudioPanel,
-      }}
-    >
+    <AppContext.Provider value={contextValue}>
       {children}
     </AppContext.Provider>
   );
 };
+
