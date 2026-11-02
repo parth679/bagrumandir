@@ -38,8 +38,12 @@ export const Footer: React.FC = () => {
           {/* Col 1: Identity & Affiliation */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-[#B85D36]/25 border border-[#D97706]/40 flex items-center justify-center text-[#D97706] text-lg font-bold shadow-inner">
-                ॐ
+              <div className="w-10 h-10 rounded-full bg-[#B85D36]/25 border border-[#D97706]/40 flex items-center justify-center overflow-hidden shadow-inner p-1 shrink-0">
+                <img
+                  src="/assets/logo/tilak-logo.svg"
+                  alt="Shree Swaminarayan Mandir Tilak"
+                  className="w-full h-full object-contain"
+                />
               </div>
               <div>
                 <h3 className="font-['Cinzel',serif] text-base font-bold tracking-wide text-[var(--text-primary)]">

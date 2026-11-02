@@ -61,8 +61,12 @@ export const NavigationPill: React.FC = () => {
             className="flex items-center gap-2 pr-2.5 sm:pr-3 border-r border-[var(--border-subtle)] group focus:outline-none"
             title="Shree Swaminarayan Mandir, Jaipur (Bagru)"
           >
-            <div className="w-8 h-8 rounded-full bg-[#B85D36]/25 border border-[#D97706]/40 flex items-center justify-center text-[#D97706] text-sm font-bold shadow-inner group-hover:scale-105 transition-transform">
-              ॐ
+            <div className="w-8 h-8 rounded-full bg-[#B85D36]/20 border border-[#D97706]/40 flex items-center justify-center overflow-hidden shadow-inner group-hover:scale-105 transition-transform p-0.5">
+              <img
+                src="/assets/logo/tilak-logo.svg"
+                alt="Shree Swaminarayan Mandir Tilak"
+                className="w-full h-full object-contain"
+              />
             </div>
             <div className="hidden md:block text-left">
               <div className="text-[11px] font-['Cinzel',serif] tracking-wider font-bold leading-tight text-[var(--text-primary)]">
@@ -198,12 +202,21 @@ export const NavigationPill: React.FC = () => {
             }}
           >
             <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-3">
-              <div>
-                <div className="text-sm font-['Cinzel',serif] font-bold text-[var(--text-primary)]">
-                  Shree Swaminarayan Mandir
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-full bg-[#B85D36]/20 border border-[#D97706]/40 flex items-center justify-center overflow-hidden shadow-inner p-0.5 shrink-0">
+                  <img
+                    src="/assets/logo/tilak-logo.svg"
+                    alt="Tilak"
+                    className="w-full h-full object-contain"
+                  />
                 </div>
-                <div className="text-xs text-[#D97706] font-['Noto_Serif_Devanagari',serif]">
-                  {getSubTitle()} • {t.common.vishranthiGruh}
+                <div>
+                  <div className="text-sm font-['Cinzel',serif] font-bold text-[var(--text-primary)]">
+                    Shree Swaminarayan Mandir
+                  </div>
+                  <div className="text-xs text-[#D97706] font-['Noto_Serif_Devanagari',serif]">
+                    {getSubTitle()} • {t.common.vishranthiGruh}
+                  </div>
                 </div>
               </div>
 
