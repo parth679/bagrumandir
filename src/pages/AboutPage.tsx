@@ -2,7 +2,7 @@ import React from 'react';
 import { PageTransition } from '../components/common/PageTransition';
 import { ArchitecturalParallax } from '../components/mandir/ArchitecturalParallax';
 import { SITE_CONFIG } from '../config/siteConfig';
-import { Compass, Layers, ShieldCheck, Heart } from 'lucide-react';
+import { Compass, Layers, ShieldCheck, Heart, Camera } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { useT } from '../i18n/useTranslation';
 
@@ -112,6 +112,71 @@ export const AboutPage: React.FC = () => {
             </div>
             <span className="font-semibold text-[#D97706]">Jaipur (Bagru), Rajasthan</span>
           </div>
+        </div>
+      </section>
+
+      {/* Authentic Bagru Architectural Showcase */}
+      <section className="px-4 max-w-7xl mx-auto text-left">
+        <div className="mb-8">
+          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#D97706] mb-2">
+            <Camera className="w-4 h-4" />
+            <span>
+              {language === 'HI'
+                ? 'मंदिर दर्शन दीर्घा'
+                : language === 'GU'
+                ? 'મંદિર દર્શન ગેલેરી'
+                : 'Temple Architectural Gallery'}
+            </span>
+          </div>
+          <h2 className="text-2xl sm:text-4xl font-['Cinzel',serif] font-bold text-[var(--text-primary)]">
+            {language === 'HI'
+              ? 'पाषाण शिल्पकला एवं पावन परिसर'
+              : language === 'GU'
+              ? 'પાષાણ શિલ્પકળા અને પવિત્ર પરિસર'
+              : 'Sacred Stone Art & Temple Campus'}
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[
+            {
+              src: '/assets/images/mandir/bagru_shikhara_carvings.jpg',
+              title: language === 'HI' ? 'शिखर एवं सूक्ष्म नक्काशी' : language === 'GU' ? 'શિખર અને બારીક નકશીકામ' : 'Nagara Shikhara Carvings',
+            },
+            {
+              src: '/assets/images/mandir/bagru_sanctum_pillars.jpg',
+              title: language === 'HI' ? 'गर्भगृह एवं स्तम्भ श्रृंखला' : language === 'GU' ? 'ગર્ભગૃહ અને સ્તંભ શ્રેણી' : 'Sanctum Pillar Arcade',
+            },
+            {
+              src: '/assets/images/mandir/bagru_parikrama_corridor.jpg',
+              title: language === 'HI' ? 'परिक्रमा पथ' : language === 'GU' ? 'પ્રદક્ષિણા પથ' : 'Devotional Parikrama Walkway',
+            },
+            {
+              src: '/assets/images/mandir/bagru_sabha_mandap.jpg',
+              title: language === 'HI' ? 'सभा मण्डप' : language === 'GU' ? 'સભા મંડપ' : 'Assembly Sabha Mandap',
+            },
+          ].map((item, i) => (
+            <div
+              key={i}
+              className="group relative rounded-2xl overflow-hidden border shadow-lg aspect-[16/10] transition-all"
+              style={{
+                backgroundColor: 'var(--bg-card)',
+                borderColor: 'var(--border-subtle)',
+              }}
+            >
+              <img
+                src={item.src}
+                alt={item.title}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-3.5">
+                <span className="text-xs font-semibold text-white drop-shadow-sm">
+                  {item.title}
+                </span>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
     </PageTransition>

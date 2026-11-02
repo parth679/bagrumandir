@@ -46,7 +46,7 @@ export const HeroSection: React.FC<HeroSectionProps> = () => {
       {/* Background Architectural Photo with Atmospheric Overlay */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <img
-          src="/assets/images/mandir/mandir_exterior.jpg"
+          src="/assets/images/mandir/bagru_mandir_wide_exterior.jpg"
           alt="Shree Swaminarayan Mandir, Jaipur (Bagru)"
           className="w-full h-full object-cover object-center filter brightness-[0.55] contrast-[1.08] scale-105 transition-transform duration-[12000ms] ease-out hover:scale-100"
           loading="eager"

@@ -64,7 +64,7 @@ export const ArchitecturalParallax: React.FC = () => {
           className="absolute inset-[-10%] z-0 will-change-transform"
         >
           <img
-            src="/assets/images/mandir/mandir_exterior.jpg"
+            src="/assets/images/mandir/bagru_temple_facade.jpg"
             alt="Temple Shikhara Architecture"
             className="w-full h-full object-cover object-center filter brightness-[0.55] contrast-105"
             loading="lazy"
