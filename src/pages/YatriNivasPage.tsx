@@ -25,7 +25,7 @@ export const YatriNivasPage: React.FC = () => {
             {t.yatriNivas.heading}
           </h1>
           <p className="font-['Noto_Serif_Devanagari',serif] text-lg sm:text-xl text-[#D97706] font-medium mt-2">
-            विश्रांति गृह — {language === 'HI' ? 'जयपुर (बगरू)' : language === 'GU' ? 'જયપુર (બગરૂ)' : 'Jaipur (Bagru)'}
+            {t.common.vishranthiGruh} — {language === 'HI' ? 'जयपुर (बगरू)' : language === 'GU' ? 'જયપુર (બગરૂ)' : 'Jaipur (Bagru)'}
           </p>
           <p className="text-[var(--text-muted)] text-base sm:text-lg mt-4 leading-relaxed">
             {t.yatriNivas.description}
@@ -74,3 +74,4 @@ export const YatriNivasPage: React.FC = () => {
     </PageTransition>
   );
 };
+

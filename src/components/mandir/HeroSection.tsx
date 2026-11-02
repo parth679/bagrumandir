@@ -32,10 +32,10 @@ export const HeroSection: React.FC<HeroSectionProps> = () => {
 
   const locationSubtitle =
     language === 'HI'
-      ? `${SITE_CONFIG.subName} — जयपुर (बगरू)`
+      ? `${t.hero.subName} — जयपुर (बगरू)`
       : language === 'GU'
-      ? `${SITE_CONFIG.subName} — જયપુર (બગરૂ)`
-      : `${SITE_CONFIG.subName} — Jaipur (Bagru)`;
+      ? `${t.hero.subName} — જયપુર (બગરૂ)`
+      : `${t.hero.subName} — Jaipur (Bagru)`;
 
   return (
     <section

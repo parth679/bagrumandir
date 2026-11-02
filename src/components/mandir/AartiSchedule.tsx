@@ -14,6 +14,17 @@ export const AartiSchedule: React.FC = () => {
     getTempleTimeStatus(undefined, undefined, language)
   );
 
+  const getAartiMeaning = (id: string, fallback: string) => {
+    switch (id) {
+      case 'mangla': return t.aarti.manglaMeaning || fallback;
+      case 'shangar': return t.aarti.shangarMeaning || fallback;
+      case 'rajbhog': return t.aarti.rajbhogMeaning || fallback;
+      case 'sandhya': return t.aarti.sandhyaMeaning || fallback;
+      case 'shayan': return t.aarti.shayanMeaning || fallback;
+      default: return fallback;
+    }
+  };
+
   useEffect(() => {
     setTimeStatus(getTempleTimeStatus(undefined, undefined, language));
     const timer = setInterval(() => {
@@ -127,7 +138,7 @@ export const AartiSchedule: React.FC = () => {
                   </div>
 
                   <p className="text-[11px] text-[var(--text-muted)] leading-relaxed">
-                    {aarti.meaning}
+                    {getAartiMeaning(aarti.id, aarti.meaning)}
                   </p>
                 </div>
 
@@ -159,6 +170,13 @@ export const AartiSchedule: React.FC = () => {
                 ? session.gujaratiSession
                 : session.session;
 
+            const sessionNote =
+              language === 'HI' && (session as any).devanagariNote
+                ? (session as any).devanagariNote
+                : language === 'GU' && (session as any).gujaratiNote
+                ? (session as any).gujaratiNote
+                : session.note;
+
             return (
               <div
                 key={idx}
@@ -176,7 +194,7 @@ export const AartiSchedule: React.FC = () => {
                   <span className="text-[#D97706] font-mono font-bold">{session.time}</span>
                 </div>
                 <div className="text-[11px] text-[var(--text-muted)]">
-                  {session.note}
+                  {sessionNote}
                 </div>
               </div>
             );

@@ -16,6 +16,9 @@ export interface TranslationDictionary {
     visit: string;
     inquiry: string;
     backToTop: string;
+    darshanShort: string;
+    stayShort: string;
+    guideShort: string;
   };
   // Common
   common: {
@@ -47,6 +50,7 @@ export interface TranslationDictionary {
   // Hero Section
   hero: {
     affiliation: string;
+    subName: string;
     tagline: string;
     description: string;
     exploreStay: string;
@@ -239,6 +243,9 @@ export const translations: Record<Language, TranslationDictionary> = {
       visit: 'Visitor Guide',
       inquiry: 'Inquiry',
       backToTop: 'Back to Top',
+      darshanShort: 'Darshan',
+      stayShort: 'Stay',
+      guideShort: 'Guide',
     },
     common: {
       open: 'Open for Darshan',
@@ -268,7 +275,8 @@ export const translations: Record<Language, TranslationDictionary> = {
     },
     hero: {
       affiliation: 'Under Shree Narnarayandev Peethasthan',
-      tagline: 'एवं विश्रांति गृह — जयपुर (बगरू)',
+      subName: '& Vishranti Gruh (Yatri Nivas)',
+      tagline: '& Vishranti Gruh (Yatri Nivas) — Jaipur (Bagru)',
       description: 'A sacred sanctum of authentic Swaminarayan devotion and serene, hospitable accommodation for visiting families and pilgrims — at Jaipur (Bagru).',
       exploreStay: 'Explore Yatri Nivas',
       sacredArchitecture: 'Sacred Architecture',
@@ -431,7 +439,7 @@ export const translations: Record<Language, TranslationDictionary> = {
       description: 'A sacred seat of spiritual peace, devotion, and hospitality at Jaipur (Bagru).',
     },
     audio: {
-      sacredDhun: 'Sacred Dhun',
+      sacredDhun: 'Dhun',
       play: 'Play',
       pause: 'Pause',
       next: 'Next Track',
@@ -449,6 +457,9 @@ export const translations: Record<Language, TranslationDictionary> = {
       visit: 'યાત્રી માર્ગદર્શિકા',
       inquiry: 'સંપર્ક',
       backToTop: 'ઉપર જાઓ',
+      darshanShort: 'દર્શન',
+      stayShort: 'નિવાસ',
+      guideShort: 'માર્ગદર્શન',
     },
     common: {
       open: 'દર્શન માટે ખુલ્લું',
@@ -478,7 +489,8 @@ export const translations: Record<Language, TranslationDictionary> = {
     },
     hero: {
       affiliation: 'શ્રી નરનારાયણ દેવ પીઠસ્થાન',
-      tagline: 'એવં વિશ્રાંતિ ગૃહ — જયપુર (બગરૂ)',
+      subName: '& વિશ્રાંતિ ગૃહ (યાત્રી નિવાસ)',
+      tagline: '& વિશ્રાંતિ ગૃહ (યાત્રી નિવાસ) — જયપુર (બગરૂ)',
       description: 'શ્રી સ્વામિનારાયણ ભક્તિ અને યાત્રીઓ માટે શાંત, ઉષ્માભર્યો નિવાસ — જયપુર (બગરૂ) ખાતે.',
       exploreStay: 'યાત્રી નિવાસ જુઓ',
       sacredArchitecture: 'પવિત્ર સ્થાપત્ય',
@@ -641,7 +653,7 @@ export const translations: Record<Language, TranslationDictionary> = {
       description: 'જયપુર (બગરૂ) માં આધ્યાત્મિક શાંતિ, ભક્તિ અને આતિથ્યનું પાવન તીર્થ.',
     },
     audio: {
-      sacredDhun: 'પાવન ધૂન',
+      sacredDhun: 'ધૂન',
       play: 'ચલાવો',
       pause: 'અટકાવો',
       next: 'આગળની ધૂન',
@@ -659,6 +671,9 @@ export const translations: Record<Language, TranslationDictionary> = {
       visit: 'यात्री मार्गदर्शिका',
       inquiry: 'संपर्क',
       backToTop: 'ऊपर जाएं',
+      darshanShort: 'दर्शन',
+      stayShort: 'निवास',
+      guideShort: 'मार्गदर्शन',
     },
     common: {
       open: 'दर्शन के लिए खुला',
@@ -688,7 +703,8 @@ export const translations: Record<Language, TranslationDictionary> = {
     },
     hero: {
       affiliation: 'श्री नरनारायण देव पीठस्थान',
-      tagline: 'एवं विश्रांति गृह — जयपुर (बगरू)',
+      subName: 'एवं विश्रांति गृह (यात्री निवास)',
+      tagline: 'एवं विश्रांति गृह (यात्री निवास) — जयपुर (बगरू)',
       description: 'श्री स्वामिनारायण भक्ति और तीर्थ यात्रियों के लिए शांत, आतिथ्यपूर्ण निवास — जयपुर (बगरू) में।',
       exploreStay: 'यात्री निवास देखें',
       sacredArchitecture: 'पावन स्थापत्य',
@@ -851,7 +867,7 @@ export const translations: Record<Language, TranslationDictionary> = {
       description: 'जयपुर (बगरू) में आध्यात्मिक शांति, भक्ति और आतिथ्य का पावन केंद्र।',
     },
     audio: {
-      sacredDhun: 'पावन धुन',
+      sacredDhun: 'धुन',
       play: 'चलाएं',
       pause: 'रोकें',
       next: 'अगला गीत',

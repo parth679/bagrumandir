@@ -14,9 +14,9 @@ export const MobileDock: React.FC = () => {
   const dockButtons = [
     { path: '/', label: t.nav.mandir, icon: Home },
     { path: '/about', label: t.nav.about, icon: Landmark },
-    { path: '/darshan', label: 'Darshan', icon: Sparkles },
-    { path: '/yatri-nivas', label: 'Stay', icon: BedDouble, hasBadge: true },
-    { path: '/visit', label: t.nav.visit.split(' ')[0] || 'Guide', icon: MapPin },
+    { path: '/darshan', label: t.nav.darshanShort, icon: Sparkles },
+    { path: '/yatri-nivas', label: t.nav.stayShort, icon: BedDouble, hasBadge: true },
+    { path: '/visit', label: t.nav.guideShort, icon: MapPin },
   ];
 
   const handleDhunClick = () => {
@@ -95,7 +95,7 @@ export const MobileDock: React.FC = () => {
             )}
           </div>
           <span className="text-[9px] tracking-tight text-[#D97706]">
-            {t.audio.sacredDhun.split(' ')[0] || 'Dhun'}
+            {t.audio.sacredDhun}
           </span>
         </button>
       </nav>
